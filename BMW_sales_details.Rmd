@@ -1,0 +1,103 @@
+---
+title: "Statistic Descriptive (BMW Sales)"
+author: "Mareko F. Nazara"
+date: "`r Sys.Date()`"
+output: html_document
+---
+![Matana University](https://www.matanauniversity.ac.id/static/images/logo-matana-white.png)
+**This is my compile markdown with r studio and this is a compile provides detailed data sales information for BMW vehicles from 2010 to 2024 across global regions. It includes attributes such as model, year, engine size, mileage, transmission type, fuel type, price, and sales volume. Scholars and analysts can use it to explore market trends, pricing approaches, and customer favorites.**
+
+[Sumber Pengambilan DataSet Kaggle.com](https://www.kaggle.com/datasets/ahmadrazakashif/bmw-worldwide-sales-records-20102024) 
+
+Let's load some data
+
+```{r}
+library(readxl)
+library(tidyverse)
+BMW_sales_data_2010_2024_ <- read_excel("C:/Users/Mareko/Downloads/archive (7)/BMW sales data (2010-2024).xlsx")
+View(BMW_sales_data_2010_2024_)
+print(BMW_sales_data_2010_2024_)
+summary(BMW_sales_data_2010_2024_)
+```
+
+
+
+**This Data is to much for us to compile so, I create or minimalize to 100 data with this code :**
+```{r}
+BMWSD = head(BMW_sales_data_2010_2024_, 100)
+print(BMWSD)
+summary(BMWSD)
+```
+
+**Basicly I just take a 2010 sample for my presentation, why? because the minimal data is 2010 in year section on the max side is also 2010**
+
+## **Main Focus**
+
+### MILEAGE KILOMETER =
+```{r}
+summary(BMWSD$Mileage_KM)
+mean(BMWSD$Mileage_KM)
+median(BMWSD$Mileage_KM)
+names(sort(-table(BMWSD$Mileage_KM)))[1]
+
+```
+
+
+### PRICE USD =
+```{r}
+summary(BMWSD$Price_USD)
+mean(BMWSD$Price_USD)
+median(BMWSD$Price_USD)
+names(sort(-table(BMWSD$Price_USD)))[1]
+```
+
+
+### Sales Volume =
+```{r}
+summary(BMWSD$Sales_Volume)
+mean(BMWSD$Sales_Volume)
+median(BMWSD$Sales_Volume)
+names(sort(-table(BMWSD$Sales_Volume)))[1]
+```
+
+
+
+
+# **The Influence of car mileage on car price =**
+```{r}
+price_car <- c(BMWSD$Price_USD)
+cars <- c(BMWSD$Model)
+mileage <- c(BMWSD$Mileage_KM)
+
+barplot(price_car, names.arg = cars, main = "BMW Sales 2010") 
+plot(mileage, price_car, main = "BMW Sales 2010")
+```
+
+
+## **PIVOT TABLE**
+```{r}
+library(pivottabler)
+
+pivot <- qpvt(BMWSD,"Model","Transmission","sum(New_Count)")
+print(pivot)
+
+Automatic = c(3,4,6,2,9,6,5,5,5,6,2)
+Model_Series = c("3 Series","5 Series","7 Series","i3","i8","M3","M5","X1","X3","X5","X6")
+pct <- round(Automatic/sum(Automatic)*100)
+Model_Series <- paste(Model_Series,"=", pct)
+
+Model_Series <- paste(Model_Series, "%",sep = "")
+pie(Automatic, labels = Model_Series,col = rainbow(length(Model_Series)), main = "Presentase Automatic/Matic")
+
+Automatic = c(2,7,4,4,1,4,5,9,2,4,5)
+Model_Series = c("3 Series","5 Series","7 Series","i3","i8","M3","M5","X1","X3","X5","X6")
+pct <- round(Automatic/sum(Automatic)*100)
+Model_Series <- paste(Model_Series,"=", pct)
+
+Model_Series <- paste(Model_Series, "%",sep = "")
+pie(Automatic, labels = Model_Series,col = rainbow(length(Model_Series)), main = "Presentase Manual")
+
+
+```
+
+
