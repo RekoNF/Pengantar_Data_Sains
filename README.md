@@ -1,4 +1,4 @@
 # Pengantar_Data_Sains
 Tugas dan Projek 
-
-[Presentasi RPubs](http://rpubs.com/RekoF/1355255)
+![Matana University](https://www.matanauniversity.ac.id/static/images/logo-matana-white.png)
+[***Presentasi RPubs-UTS***](http://rpubs.com/RekoF/1355254)
